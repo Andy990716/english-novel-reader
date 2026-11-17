@@ -1,0 +1,12 @@
+{
+  "name": "english-novel-reader",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Password-protected personal English reading practice website",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
