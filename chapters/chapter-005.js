@@ -75,8 +75,8 @@ window.NovelReader.registerChapter({
     {
       "title": "Part 4 — Back to the Ship",
       "paragraphs": [
-        "As Shi Le reached behind the sailor to lift him, he felt something strange under the shirt. Bandages? Why were they wrapped around the sailor’s chest? When he adjusted his grip, he suddenly realized what the bandages were hiding.",
-        "He pulled back as if he’d seen a ghost. “This guy… Wait. She’s a girl?” Cold sweat broke out on his forehead. He took a deep breath and got his thoughts in order. Either way, he was taking her back to the ship. He decided to carry her in his arms instead of slinging her over his shoulder. It seemed like the least he could do after the awkward discovery.",
+        "As Shi Le reached behind the sailor to lift him, his fingers brushed against a soft curve beneath the bandages. He froze. He knew that shape. He had felt the same thing when he touched Qiu Qianluo. The sailor was a girl.",
+        "Shi Le jerked back as if he’d seen a ghost. “This guy… No, this girl?” Cold sweat broke out on his forehead. For a moment, he couldn’t believe it. Then he took a deep breath and composed himself. Girl or boy, he was still taking her back to the ship. He decided to carry her in his arms instead of slinging her over his shoulder. It seemed like the least he could do after accidentally touching her.",
         "For someone with such unusual strength, she was surprisingly light. Shi Le picked her up easily and headed for the harbor. A sailor stopped him at the ship, but let him aboard once he explained why he was there.",
         "Only a dozen or so crew members remained on board, and none looked ready to set sail. Were the others at the feast the old sailor had mentioned in the warehouse? Shi Le hoped that was all it was.",
         "Below deck, hammocks were strung up in a mess. Shi Le considered setting her down in one. She’d be asleep for days, though, and leaving her unconscious among a group of men didn’t sit right with him. If anything happened, he’d never forgive himself.",
