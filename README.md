@@ -1,47 +1,43 @@
 # My Game Character Has a Problem! — English Reader
 
-A personal, password-protected English reader for studying B2–C1 prose. Chapters 1–4 are stored in `chapters/` and include Chinese vocabulary explanations, reading progress, font size controls, and dark mode.
+Mobile-friendly English-language reading practice site for the novel, with chapters 1–4, bilingual Key Vocabulary lists, chapter navigation, font-size controls, dark mode, and progress saved in your browser.
 
-[Start private Render deployment](https://render.com/deploy?repo=https://github.com/Andy990716/english-novel-reader)
+## Publish with GitHub Pages
 
-## Private deployment on Render
+The reader is a static site. It does **not** need Node.js, Render, Railway, environment variables, or a password.
 
-This repository contains a `render.yaml` Blueprint for a **Free Web Service**, not a publicly accessible static site.
+1. If you use **GitHub Free**, go to **Settings → General → Danger Zone → Change repository visibility**, and set this repository to **Public**. The owner has confirmed permission to publish the translation. Note that this exposes repository files and git history publicly, not just the webpage. For GitHub Pro and eligible plans, private repository Pages publishing may also be available, although the website itself can still be publicly accessible.
+2. In this repository, open **Settings → Pages**.
+3. Under **Build and deployment**, choose **Deploy from a branch**.
+4. Choose branch **main** and folder **/(root)**, then click **Save**.
+5. GitHub Pages provides a live URL after publishing: **https://andy990716.github.io/english-novel-reader/**
 
-1. Log into Render and connect the private GitHub repository `Andy990716/english-novel-reader`.
-2. Select **New > Blueprint** and use the root `render.yaml`.
-3. Choose the Free instance. When asked for **READER_PASSWORD**, supply a unique private password (at least 12 characters). Do not commit passwords into GitHub.
-4. Complete the deployment. Render provides an HTTPS `*.onrender.com` URL.
-5. Open the URL and sign in using **username `reader`** and your chosen password.
+The site entrypoint is `index.html`. Static files `styles.css`, `reader.js`, `chapters/catalog.js`, and `chapters/chapter-*.js` must remain in place. `.nojekyll` disables Jekyll processing.
 
-Every book-related request is protected by HTTP Basic authentication over HTTPS, including individual chapter files. The unprotected `/healthz` endpoint only returns `ok`. Avoid switching to public static hosting or disabling the password gate.
+## Update the novel
 
-**Important:** Your repository is private but Render provides an internet-facing, password-protected site; only share your access credentials with people who are permitted to read the material. This personal study translation should not be publicly distributed without the relevant rights.
+Each chapter is stored independently in `chapters/` as a JavaScript data file. Example:
 
-Render's Free Web Services may go to sleep after 15 minutes of inactivity, so the first visit after a pause may take longer.
-
-## Updating chapters
-
-Add `chapters/chapter-005.js` containing:
-
-```js
+```javascript
 window.NovelReader.registerChapter({
-  id:5,
-  title:'...',
-  parts:[{title:'Part 1 — ...', paragraphs:['...'], vocab:['word (n.) 中文']}]
+  id: 5,
+  title: '...',
+  parts: [
+    {title: 'Part 1 — ...', paragraphs: ['Paragraph text'], vocab: ['word (n.) 中文']}
+  ]
 });
 ```
 
-Then append its metadata to `chapters/catalog.js`. Subsequent updates to `main` can automatically redeploy through Render.
+For a new chapter, add `chapters/chapter-005.js` and append this entry to `chapters/catalog.js`:
 
-## Local preview
-
-With Node.js 20+ installed:
-
-```bash
-READER_PASSWORD='your-private-password-here' npm start
+```javascript
+{id:5,title:'...',file:'chapters/chapter-005.js'}
 ```
 
-Then visit `http://localhost:3000`, sign in as `reader`, and enter your chosen password.
+Once Pages is configured for `main`, new GitHub commits to that branch will trigger website updates automatically.
 
-Author: 无闩. Translation provided for personal English reading practice.
+## Note about previous deployment services
+
+The repository still contains older `server.js`, `package.json`, and `render.yaml` files from previous Render/Railway deployment experiments. **GitHub Pages ignores these files** and does not use the password authentication in `server.js`. This Pages website is public and should not be used to store secrets.
+
+Original novel author: 无闩. English translation provided for reading practice. Publish only material you have rights to distribute.
