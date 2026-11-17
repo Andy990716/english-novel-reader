@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#f7f4ed" />
+<meta name="description" content="My Game Character Has a Problem! English Reading Edition B2–C1" />
+<title>My Game Character Has a Problem! · English Reader</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="progress-track" aria-hidden="true"><div id="progress" class="progress"></div></div>
+<header class="topbar"><div class="topwrap">
+  <a class="brand" href="#home" aria-label="Back to home"><span class="brand-mark">M</span><span class="brand-name">NOVEL / ENGLISH</span></a>
+  <div class="topactions"><button id="themeBtn" class="iconbutton" aria-label="切換深色模式" title="切換深色模式">◐</button><button id="fontMinus" class="iconbutton" aria-label="縮小字體">A−</button><button id="fontPlus" class="iconbutton" aria-label="放大字體">A+</button></div>
+</div></header>
+<main class="wrap">
+<aside class="rail"><div class="sidebar-inner">
+  <div class="eyebrow">YOUR LIBRARY</div><h2>Chapters</h2>
+  <div id="chapterList" class="chapter-list"></div>
+  <div class="rail-foot"><span class="pill">B2–C1</span><p>Natural English · Key Vocabulary</p></div>
+</div></aside>
+<section class="main">
+  <div class="hero" id="home">
+    <div class="eyebrow">ENGLISH READING PRACTICE <span class="dot"></span> SERIAL NOVEL</div>
+    <h1>My Game Character<br/>Has a Problem<span class="accent">!</span></h1>
+    <p class="subtitle">A world he thought he knew. Characters who are anything but predictable.</p>
+    <div class="hero-meta"><span>Wu Shuan · 无闩</span><span class="sep">/</span><span>English B2–C1</span><span class="sep">/</span><span id="countLabel">4 chapters</span></div>
+  </div>
+  <div class="reading-tools">
+    <div><span class="eyebrow">NOW READING</span><div id="currentTitle" class="current-title">Chapter 1</div></div>
+    <div class="toolright"><label class="select-label" for="chapterSelect">章節</label><select id="chapterSelect" aria-label="選擇章節"></select><button id="vocabToggle" class="vocab-toggle" aria-pressed="true">單字表 <span id="vocabSymbol">ON</span></button></div>
+  </div>
+  <article id="reader" class="reader" aria-live="polite"><p>Loading chapter…</p></article>
+  <div class="chapter-bottom"><button id="prevBtn" class="navbtn">← 上一章</button><span id="readingPercent">0% read</span><button id="nextBtn" class="navbtn primary">下一章 →</button></div>
+  <footer class="footer">A personal English reading companion. Progress is saved on this device.<br/>Text translation for personal reading practice · Published site requires content rights.</footer>
+</section>
+</main>
+<button id="jumpTop" class="jump-top" aria-label="回到上方" title="回到上方">↑</button>
+<script src="reader.js"></script>
+<script src="chapters/catalog.js"></script>
+<script>window.NovelReader.init();</script>
+</body>
+</html>
