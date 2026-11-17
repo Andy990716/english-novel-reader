@@ -2,6 +2,8 @@
 
 A personal, password-protected English reader for studying B2–C1 prose. Chapters 1–4 are stored in `chapters/` and include Chinese vocabulary explanations, reading progress, font size controls, and dark mode.
 
+[Start private Render deployment](https://render.com/deploy?repo=https://github.com/Andy990716/english-novel-reader)
+
 ## Private deployment on Render
 
 This repository contains a `render.yaml` Blueprint for a **Free Web Service**, not a publicly accessible static site.
