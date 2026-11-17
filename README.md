@@ -1,13 +1,45 @@
 # My Game Character Has a Problem! — English Reader
 
-Private reading project for personal B2–C1 English practice. Includes chapters 1–4 in `chapters/`, the bilingual Key Vocabulary lists, mobile-friendly reading, dark mode, font-size options and local reading progress.
+A personal, password-protected English reader for studying B2–C1 prose. Chapters 1–4 are stored in `chapters/` and include Chinese vocabulary explanations, reading progress, font size controls, and dark mode.
+
+## Private deployment on Render
+
+This repository contains a `render.yaml` Blueprint for a **Free Web Service**, not a publicly accessible static site.
+
+1. Log into Render and connect the private GitHub repository `Andy990716/english-novel-reader`.
+2. Select **New > Blueprint** and use the root `render.yaml`.
+3. Choose the Free instance. When asked for **READER_PASSWORD**, supply a unique private password (at least 12 characters). Do not commit passwords into GitHub.
+4. Complete the deployment. Render provides an HTTPS `*.onrender.com` URL.
+5. Open the URL and sign in using **username `reader`** and your chosen password.
+
+Every book-related request is protected by HTTP Basic authentication over HTTPS, including individual chapter files. The unprotected `/healthz` endpoint only returns `ok`. Avoid switching to public static hosting or disabling the password gate.
+
+**Important:** Your repository is private but Render provides an internet-facing, password-protected site; only share your access credentials with people who are permitted to read the material. This personal study translation should not be publicly distributed without the relevant rights.
+
+Render's Free Web Services may go to sleep after 15 minutes of inactivity, so the first visit after a pause may take longer.
 
 ## Updating chapters
 
-Add `chapters/chapter-005.js` containing `window.NovelReader.registerChapter({id:5,title:'...',parts:[{title:'Part 1 — ...',paragraphs:['...'],vocab:['word (n.) 中文']} ]});` and append the entry to `chapters/catalog.js`. Continue with the same structure for future chapters.
+Add `chapters/chapter-005.js` containing:
 
-## Previewing
+```js
+window.NovelReader.registerChapter({
+  id:5,
+  title:'...',
+  parts:[{title:'Part 1 — ...', paragraphs:['...'], vocab:['word (n.) 中文']}]
+});
+```
 
-Open `index.html` with a static HTTP server. This repository is private and the content is not published publicly. GitHub Pages can make content available to others depending on account and visibility settings; do not enable public hosting without proper publishing rights.
+Then append its metadata to `chapters/catalog.js`. Subsequent updates to `main` can automatically redeploy through Render.
 
-Source author: 无闩. Translation is for personal English reading practice.
+## Local preview
+
+With Node.js 20+ installed:
+
+```bash
+READER_PASSWORD='your-private-password-here' npm start
+```
+
+Then visit `http://localhost:3000`, sign in as `reader`, and enter your chosen password.
+
+Author: 无闩. Translation provided for personal English reading practice.
