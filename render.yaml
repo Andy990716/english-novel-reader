@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: english-novel-reader
+    runtime: node
+    plan: free
+    repo: https://github.com/Andy990716/english-novel-reader
+    branch: main
+    buildCommand: npm install --omit=dev
+    startCommand: npm start
+    healthCheckPath: /healthz
+    autoDeployTrigger: commit
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: READER_PASSWORD
+        sync: false
