@@ -6,13 +6,14 @@
 <meta name="theme-color" content="#f7f4ed" />
 <meta name="description" content="My Game Character Has a Problem! English Reading Edition B2–C1" />
 <title>My Game Character Has a Problem! · English Reader</title>
-<link rel="stylesheet" href="styles.css?v=20261117-touch1" />
+<link rel="stylesheet" href="styles.css?v=20261118-reader3" />
 </head>
 <body>
+<a class="skip-link" href="#reader">跳到閱讀內容</a>
 <div class="progress-track" aria-hidden="true"><div id="progress" class="progress"></div></div>
 <header class="topbar"><div class="topwrap">
   <a class="brand" href="#home" aria-label="回首頁" title="回首頁"><span class="brand-mark">M</span><span class="brand-name">NOVEL / ENGLISH</span></a>
-  <div class="topactions"><a class="iconbutton" href="#contents">目錄</a><a class="iconbutton" href="#bookmarks">書籤</a><button id="themeBtn" class="iconbutton" aria-label="切換深色模式" title="切換深色模式">◐</button><button id="fontMinus" class="iconbutton" aria-label="縮小字體">A−</button><button id="fontPlus" class="iconbutton" aria-label="放大字體">A+</button></div>
+  <div class="topactions"><a class="iconbutton" href="#contents">目錄</a><a class="iconbutton" href="#bookmarks">書籤</a><button id="themeBtn" class="iconbutton" aria-label="切換深色模式" title="切換深色模式">◐</button><button id="settingsBtn" class="iconbutton" aria-haspopup="dialog">閱讀設定</button></div>
 </div></header>
 <main class="wrap">
 <aside class="rail"><div class="sidebar-inner">
@@ -22,10 +23,10 @@
 </div></aside>
 <section class="main">
   <section id="libraryHome">
-<div class="book-showcase"><div class="book-cover" role="img" aria-label="我的遊戲角色有問題，英文閱讀版文字設計封面"><span>WU SHUAN</span><div class="cover-orbit"></div><strong>My Game<br>Character<br>Has a<br>Problem!</strong><span>我的遊戲角色有問題！</span></div><div><p class="eyebrow">ENGLISH READING EDITION</p><h1>我的遊戲角色有問題！</h1><h2>My Game Character Has a Problem!</h2><p>無閂 · Wu Shuan</p><p>醒來後，他成了遊戲新手教程中註定被打倒的小怪。熟悉的世界裡，每個角色卻都超出他的預料。</p><p>B2–C1 英文小說 · 中文單字解釋</p><button class="navbtn primary" id="continueReading">繼續閱讀</button> <a class="navbtn" href="#chapter-1">從第一章開始</a></div></div>
-<h2 id="contents">章節目錄</h2><div id="homeContents" class="home-contents"></div>
-<h2 id="bookmarks">我的書籤</h2><p>書籤儲存在此裝置的瀏覽器。</p><div id="bookmarkList"></div>
-</section><div id="readingView"><div class="hero" id="readingHero">
+<div class="book-showcase"><div class="book-cover" role="img" aria-label="我的遊戲角色有問題，英文閱讀版文字設計封面"><span>WU SHUAN</span><div class="cover-orbit"></div><strong>My Game<br>Character<br>Has a<br>Problem!</strong><span>我的遊戲角色有問題！</span></div><div><p class="eyebrow">ENGLISH READING EDITION</p><h1>我的遊戲角色有問題！</h1><h2>My Game Character Has a Problem!</h2><p>無閂 · Wu Shuan</p><p>醒來後，他成了遊戲新手教程中註定被打倒的小怪。熟悉的世界裡，每個角色卻都超出他的預料。</p><p>B2–C1 英文小說 · 中文單字解釋</p><p id="resumeLabel" class="resume-label"></p><button class="navbtn primary" id="continueReading">繼續閱讀</button> <a class="navbtn" href="#chapter-1">從第一章開始</a></div></div>
+<div class="section-heading"><div><p class="eyebrow">THE STORY SO FAR</p><h2 id="contents">章節目錄</h2></div><span id="chapterCount" class="pill"></span></div><label class="search-label" for="chapterSearch">搜尋章節</label><input id="chapterSearch" class="chapter-search" type="search" placeholder="輸入章節編號或英文標題…" autocomplete="off"><p id="searchStatus" class="muted" role="status"></p><div id="homeContents" class="home-contents"></div>
+<div class="section-heading"><div><p class="eyebrow">SAVED FOR LATER</p><h2 id="bookmarks">我的書籤</h2></div><span id="bookmarkCount" class="pill"></span></div><p>書籤儲存在此裝置的瀏覽器。</p><div id="bookmarkList"></div>
+</section><div id="readingView" hidden><div class="hero" id="readingHero">
     <div class="eyebrow">ENGLISH READING PRACTICE <span class="dot"></span> SERIAL NOVEL</div>
     <h1>My Game Character<br/>Has a Problem<span class="accent">!</span></h1>
     <p class="subtitle">A world he thought he knew. Characters who are anything but predictable.</p>
@@ -35,14 +36,25 @@
     <div><span class="eyebrow">NOW READING</span><div id="currentTitle" class="current-title">Chapter 1</div></div>
     <div class="toolright"><label class="select-label" for="chapterSelect">章節</label><select id="chapterSelect" aria-label="選擇章節"></select><button id="vocabToggle" class="vocab-toggle" aria-pressed="true">單字表 <span id="vocabSymbol">ON</span></button></div>
   </div>
-  <button id="addBookmark" class="navbtn">＋ 加入書籤</button><p id="bookmarkStatus" role="status"></p><article id="reader" class="reader" aria-live="polite"><p>Loading chapter…</p></article>
+  <div class="reader-actions"><button id="addBookmark" class="navbtn">＋ 加入書籤</button><span id="readingTime" class="muted"></span></div><details class="part-navigation"><summary>本章小節</summary><nav id="partList" aria-label="本章小節"></nav></details><p id="bookmarkStatus" role="status"></p><article id="reader" class="reader" tabindex="-1"><p>Loading chapter…</p></article>
   <div class="chapter-bottom"><button id="prevBtn" class="navbtn">← 上一章</button><span id="readingPercent">0% read</span><button id="nextBtn" class="navbtn primary">下一章 →</button></div>
-  </div><footer class="footer">A personal English reading companion. Progress is saved on this device.<br/>Text translation for personal reading practice · Published site requires content rights.</footer>
+  </div><footer class="footer">Read a little. Discover a little more.<br/>閱讀進度、書籤與設定會保存在此瀏覽器。</footer>
 </section>
 </main>
+<dialog id="settingsDialog" aria-labelledby="settingsTitle">
+<form method="dialog" class="settings-heading"><h2 id="settingsTitle">讓閱讀更舒服</h2><button class="iconbutton" aria-label="關閉閱讀設定">✕</button></form>
+<p class="muted">設定會自動儲存，下次閱讀時沿用。</p>
+<div class="setting-row"><span>字體大小</span><div><button id="fontMinus" class="iconbutton" aria-label="縮小字體">A−</button> <output id="fontSizeLabel"></output> <button id="fontPlus" class="iconbutton" aria-label="放大字體">A+</button></div></div>
+<label class="setting-row">閱讀字型<select id="fontFamily"><option value="serif">襯線 · 小說風格</option><option value="sans">無襯線 · 清晰簡潔</option></select></label>
+<label class="setting-row">行距<select id="lineHeight"><option value="1.7">緊湊</option><option value="1.9">標準</option><option value="2.2">寬鬆</option></select></label>
+<label class="setting-row">配色<select id="themeSelect"><option value="light">暖白紙頁</option><option value="sepia">柔和米色</option><option value="dark">深色夜讀</option></select></label>
+<label class="setting-row">章首插圖<input id="artToggle" type="checkbox"></label>
+<p class="muted">長按正文可選字；每段旁的「＋」可直接儲存該段書籤。</p>
+</dialog>
+<div id="readerNotice" class="reader-notice" role="status" hidden></div>
 <button id="jumpTop" class="jump-top" aria-label="回到上方" title="回到上方">↑</button>
-<script src="reader.js?v=20261117-touch1"></script>
+<script src="reader.js?v=20261118-reader3"></script>
 <script src="chapters/catalog.js?v=20261118-ch8"></script>
-<script src="library.js"></script><script>window.NovelReader.init(); window.NovelLibrary.init();</script>
+<script src="library.js?v=20261118-reader3"></script><script>window.NovelReader.init(); window.NovelLibrary.init();</script>
 </body>
 </html>

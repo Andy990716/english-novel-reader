@@ -1,1 +1,255 @@
-(function(){'use strict';var key='novel-reader-progress-v2',data={},list=[],current=1,pending=false,scrollFrame=0,saveTimer=0,interaction=0,navigation=0,pendingInteraction=0;var state={theme:'light',size:18,vocab:true,chapter:1,positions:{}};try{Object.assign(state,JSON.parse(localStorage.getItem(key)||'{}'))}catch(e){}function save(){try{localStorage.setItem(key,JSON.stringify(state))}catch(e){}}function queueSave(){clearTimeout(saveTimer);saveTimer=setTimeout(save,250)}function make(t,c,s){var n=document.createElement(t);if(c)n.className=c;if(s!==undefined)n.textContent=s;return n}function paint(d){var box=document.getElementById('reader');box.textContent='';var h=make('div','chapter-intro');h.append(make('div','chapter-kicker','CHAPTER '+String(d.id).padStart(2,'0')),make('h2','',d.title));box.append(h);var meta=list.find(function(x){return x.id===d.id});if(meta&&meta.image){var photo=make('img','chapter-illustration');photo.src=meta.image;photo.alt='Chapter '+d.id+' — '+d.title+' illustration';photo.width=1672;photo.height=941;photo.loading='eager';photo.decoding='async';box.append(photo)}d.parts.forEach(function(p,i){var section=make('section','part');section.id='part-'+i;section.append(make('h3','',p.title));var paragraphs=make('div','paragraphs');p.paragraphs.forEach(function(s){paragraphs.append(make('p',/^[“"‘]/.test(s)?'dialogue':'',s))});section.append(paragraphs);if(p.vocab.length){var vocab=make('div','vocab-card');vocab.append(make('h4','','KEY VOCABULARY · 重點單字'));var grid=make('div','vocab-grid');p.vocab.forEach(function(s){var m=s.match(/^(.+?)(?:\s+([\u3400-\u9fff].*))$/),item=make('div','vocab-item');item.append(make('div','vocab-en',m?m[1]:s),make('div','vocab-cn',m?m[2]:''));grid.append(item)});vocab.append(grid);section.append(vocab)}box.append(section)});box.classList.toggle('vocab-hidden',!state.vocab);document.getElementById('currentTitle').textContent='Chapter '+d.id+' — '+d.title;document.getElementById('chapterSelect').value=d.id;document.querySelectorAll('.chapter-link').forEach(function(x){x.classList.toggle('active',+x.dataset.id===d.id)});var pos=list.findIndex(function(x){return x.id===d.id});document.getElementById('prevBtn').disabled=pos===0;document.getElementById('nextBtn').disabled=pos===list.length-1;document.title='Chapter '+d.id+' · '+d.title+' | English Reader'}function scroll(resume){var chapter=current,version=navigation,gesture=pendingInteraction,savedTop=state.positions[chapter];requestAnimationFrame(function(){requestAnimationFrame(function(){if(version!==navigation||chapter!==current||gesture!==interaction||document.getElementById('readingView').hidden)return;if(resume&&savedTop)window.scrollTo({top:savedTop,behavior:'instant'});else{var t=document.querySelector('.reading-tools');window.scrollTo({top:Math.max(0,t.getBoundingClientRect().top+window.scrollY-85),behavior:'instant'})}progress()})})}function jump(id,resume){document.getElementById('libraryHome').hidden=true;document.getElementById('readingView').hidden=false;var item=list.find(function(x){return x.id===id});if(!item)return;navigation++;pendingInteraction=interaction;current=id;state.chapter=id;save();history.replaceState(null,'','#chapter-'+id);pending=resume;if(data[id]){paint(data[id]);scroll(resume)}else{document.getElementById('reader').textContent='Loading chapter…';var s=document.createElement('script');s.src=item.file;s.onerror=function(){document.getElementById('reader').textContent='Unable to load chapter.'};document.head.append(s)}}function progress(){if(document.getElementById('readingView').hidden)return;var top=window.scrollY,full=Math.max(document.documentElement.scrollHeight-innerHeight,1),pct=Math.round(top/full*100);document.getElementById('progress').style.width=pct+'%';document.getElementById('readingPercent').textContent=pct+'% read';state.positions[current]=top;queueSave()}function next(delta){var i=list.findIndex(function(x){return x.id===current});if(list[i+delta])jump(list[i+delta].id,false)}window.NovelReader={open:jump,registerChapter:function(d){data[d.id]=d;if(d.id===current){paint(d);scroll(pending)}},init:function(){list=window.NOVEL_CATALOG||[];if(!list.length)return;document.getElementById('countLabel').textContent=list.length+' chapters';document.documentElement.dataset.theme=state.theme;document.documentElement.style.setProperty('--size',state.size+'px');var select=document.getElementById('chapterSelect'),sidebar=document.getElementById('chapterList');list.forEach(function(ch){var op=make('option','', 'Chapter '+ch.id);op.value=ch.id;select.append(op);var b=make('button','chapter-link');b.dataset.id=ch.id;b.append(make('span','number',String(ch.id).padStart(2,'0')),make('span','',ch.title));b.onclick=function(){jump(ch.id,false)};sidebar.append(b)});select.onchange=function(){jump(+this.value,false)};document.getElementById('prevBtn').onclick=function(){next(-1)};document.getElementById('nextBtn').onclick=function(){next(1)};document.getElementById('themeBtn').onclick=function(){state.theme=state.theme==='light'?'dark':'light';document.documentElement.dataset.theme=state.theme;save()};document.getElementById('fontPlus').onclick=function(){state.size=Math.min(25,state.size+1);document.documentElement.style.setProperty('--size',state.size+'px');save()};document.getElementById('fontMinus').onclick=function(){state.size=Math.max(15,state.size-1);document.documentElement.style.setProperty('--size',state.size+'px');save()};document.getElementById('vocabToggle').onclick=function(){state.vocab=!state.vocab;document.getElementById('reader').classList.toggle('vocab-hidden',!state.vocab);document.getElementById('vocabSymbol').textContent=state.vocab?'ON':'OFF';save()};document.getElementById('vocabSymbol').textContent=state.vocab?'ON':'OFF';document.getElementById('jumpTop').onclick=function(){window.scrollTo({top:0,behavior:'smooth'})};window.addEventListener('scroll',function(){if(scrollFrame)return;scrollFrame=requestAnimationFrame(function(){scrollFrame=0;progress()})},{passive:true});['touchstart','pointerdown','wheel','keydown'].forEach(function(type){window.addEventListener(type,function(){interaction++},{passive:true})});window.addEventListener('pagehide',save);document.addEventListener('visibilitychange',function(){if(document.hidden)save()});var m=location.hash.match(/^#chapter-(\d+)$/),id=m?+m[1]:state.chapter;if(!list.some(function(c){return c.id===id}))id=1;if(m)jump(id,false)}}})();
+(function () {
+  'use strict';
+  const key = 'novel-reader-progress-v2';
+  const data = new Map(), loads = new Map();
+  let list = [], current = null, loaded = false, navigation = 0, gesture = 0;
+  let frame = 0, saveTimer = 0, noticeTimer = 0, paragraphs = [];
+  const state = { theme: 'light', size: 18, vocab: true, chapter: 1, positions: {}, anchors: {}, percentages: {}, font: 'serif', lineHeight: '1.9', art: true };
+  try {
+    const saved = JSON.parse(localStorage.getItem(key) || '{}');
+    if (saved && typeof saved === 'object') Object.assign(state, saved);
+  } catch (_) {}
+  for (const field of ['positions', 'anchors', 'percentages']) {
+    if (!state[field] || typeof state[field] !== 'object' || Array.isArray(state[field])) state[field] = {};
+  }
+  state.size = Math.max(15, Math.min(28, Number(state.size) || 18));
+  if (!['light', 'dark', 'sepia'].includes(state.theme)) state.theme = 'light';
+  if (!['1.7', '1.9', '2.2'].includes(String(state.lineHeight))) state.lineHeight = '1.9';
+  if (!['serif', 'sans'].includes(state.font)) state.font = 'serif';
+  const $ = id => document.getElementById(id);
+  function make(tag, cls, text) {
+    const node = document.createElement(tag);
+    if (cls) node.className = cls;
+    if (text !== undefined) node.textContent = text;
+    return node;
+  }
+  function save() { try { localStorage.setItem(key, JSON.stringify(state)); } catch (_) {} }
+  function persistSoon() { clearTimeout(saveTimer); saveTimer = setTimeout(save, 300); }
+  function notice(text) {
+    $('readerNotice').textContent = text;
+    $('readerNotice').hidden = false;
+    clearTimeout(noticeTimer);
+    noticeTimer = setTimeout(() => { $('readerNotice').hidden = true; }, 2800);
+  }
+  function applySettings() {
+    document.documentElement.dataset.theme = state.theme;
+    document.documentElement.dataset.font = state.font;
+    document.documentElement.style.setProperty('--size', state.size + 'px');
+    document.documentElement.style.setProperty('--leading', state.lineHeight);
+    $('reader').classList.toggle('vocab-hidden', !state.vocab);
+    $('reader').classList.toggle('art-hidden', !state.art);
+    $('vocabToggle').setAttribute('aria-pressed', String(state.vocab));
+    $('vocabSymbol').textContent = state.vocab ? 'ON' : 'OFF';
+    $('fontSizeLabel').textContent = state.size + ' px';
+    $('fontMinus').disabled = state.size <= 15;
+    $('fontPlus').disabled = state.size >= 28;
+    $('fontFamily').value = state.font;
+    $('lineHeight').value = state.lineHeight;
+    $('themeSelect').value = state.theme;
+    $('artToggle').checked = state.art;
+    $('themeBtn').setAttribute('aria-label', state.theme === 'dark' ? '切換暖白模式' : '切換深色模式');
+    const meta = document.querySelector('meta[name="theme-color"]');
+    meta.content = state.theme === 'dark' ? '#161a1b' : state.theme === 'sepia' ? '#eee3cf' : '#f7f4ed';
+  }
+  function position() {
+    if (!paragraphs.length) return null;
+    const edge = innerWidth > 850 ? 100 : 20;
+    let low = 0, high = paragraphs.length - 1;
+    while (low < high) {
+      const mid = Math.floor((low + high) / 2);
+      if (paragraphs[mid].getBoundingClientRect().bottom <= edge) low = mid + 1;
+      else high = mid;
+    }
+    const rect = paragraphs[low].getBoundingClientRect();
+    return { paragraph: low, fraction: Math.max(0, Math.min(1, (edge - rect.top) / Math.max(rect.height, 1))) };
+  }
+  function progress() {
+    if (!loaded || current === null || $('readingView').hidden) return;
+    const box = $('reader').getBoundingClientRect();
+    const start = box.top + scrollY;
+    const distance = Math.max(box.height - innerHeight, 1);
+    const pct = Math.max(0, Math.min(100, Math.round((scrollY - start) / distance * 100)));
+    $('progress').style.width = pct + '%';
+    $('readingPercent').textContent = '本章 ' + pct + '%';
+    state.positions[current] = scrollY;
+    state.anchors[current] = paragraphs.length && paragraphs[0].getBoundingClientRect().top <= (innerWidth > 850 ? 100 : 20) ? position() : null;
+    state.percentages[current] = pct;
+    persistSoon();
+  }
+  function paint(chapter) {
+    const box = $('reader');
+    box.replaceChildren();
+    const intro = make('div', 'chapter-intro');
+    intro.append(make('div', 'chapter-kicker', 'CHAPTER ' + String(chapter.id).padStart(2, '0')), make('h2', '', chapter.title));
+    box.append(intro);
+    const item = list.find(item => item.id === chapter.id);
+    if (item.image) {
+      const image = make('img', 'chapter-illustration');
+      image.src = item.image;
+      image.alt = 'Chapter ' + chapter.id + ' — ' + chapter.title + ' illustration';
+      image.width = 1672; image.height = 941; image.decoding = 'async';
+      box.append(image);
+    }
+    $('partList').replaceChildren();
+    let paragraphIndex = 0;
+    chapter.parts.forEach((part, index) => {
+      const section = make('section', 'part');
+      section.id = 'part-' + index;
+      section.append(make('h3', '', part.title));
+      const jump = make('button', 'part-link', part.title);
+      jump.onclick = () => {
+        section.scrollIntoView({ behavior: 'instant', block: 'start' });
+        progress();
+      };
+      $('partList').append(jump);
+      const body = make('div', 'paragraphs');
+      part.paragraphs.forEach(text => {
+        const row = make('div', 'paragraph-row');
+        const p = make('p', /^[“"‘]/.test(text) ? 'dialogue' : '', text);
+        const id = paragraphIndex++;
+        p.dataset.paragraph = id;
+        const mark = make('button', 'paragraph-mark', '＋');
+        mark.type = 'button';
+        mark.setAttribute('aria-label', '儲存第 ' + (id + 1) + ' 段書籤');
+        mark.title = '儲存這段';
+        mark.onclick = () => window.NovelLibrary.addBookmark(id);
+        row.append(p, mark); body.append(row);
+      });
+      section.append(body);
+      if (part.vocab.length) {
+        const card = make('div', 'vocab-card'), grid = make('div', 'vocab-grid');
+        card.append(make('h4', '', 'KEY VOCABULARY · 重點單字'));
+        part.vocab.forEach(text => {
+          const match = text.match(/^(.+?)(?:\s+([\u3400-\u9fff].*))$/);
+          const item = make('div', 'vocab-item');
+          item.append(make('div', 'vocab-en', match ? match[1] : text), make('div', 'vocab-cn', match ? match[2] : ''));
+          grid.append(item);
+        });
+        card.append(grid); section.append(card);
+      }
+      box.append(section);
+    });
+    paragraphs = Array.from(box.querySelectorAll('.paragraphs p'));
+    const words = chapter.parts.flatMap(p => p.paragraphs).join(' ').trim().split(/\s+/).length;
+    $('readingTime').textContent = words.toLocaleString() + ' words · 約 ' + Math.ceil(words / 180) + ' 分鐘';
+    $('currentTitle').textContent = 'Chapter ' + chapter.id + ' — ' + chapter.title;
+    $('chapterSelect').value = chapter.id;
+    $('bookmarkStatus').textContent = '';
+    document.querySelectorAll('#chapterList .chapter-link').forEach(link => {
+      const active = Number(link.dataset.id) === chapter.id;
+      link.classList.toggle('active', active);
+      if (active) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current');
+    });
+    const index = list.findIndex(item => item.id === chapter.id);
+    $('prevBtn').disabled = index === 0;
+    $('nextBtn').disabled = index === list.length - 1;
+    $('nextBtn').textContent = index === list.length - 1 ? '已讀到最新章' : '下一章 →';
+    document.title = 'Chapter ' + chapter.id + ' · ' + chapter.title + ' | English Reader';
+    applySettings();
+  }
+  function load(item) {
+    if (data.has(item.id)) return Promise.resolve(data.get(item.id));
+    if (loads.has(item.id)) return loads.get(item.id);
+    const promise = new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = item.file;
+      script.onload = () => {
+        script.remove(); loads.delete(item.id);
+        if (data.has(item.id)) resolve(data.get(item.id)); else reject(new Error('Missing chapter'));
+      };
+      script.onerror = () => { script.remove(); loads.delete(item.id); reject(new Error('Network error')); };
+      document.head.append(script);
+    });
+    loads.set(item.id, promise);
+    return promise;
+  }
+  async function open(id, resume = false, options = {}) {
+    const item = list.find(item => item.id === Number(id));
+    if (!item) { notice('找不到這個章節，請從目錄選擇。'); return false; }
+    progress(); save();
+    const token = ++navigation, startGesture = gesture;
+    const savedTop = state.positions[item.id];
+    const anchor = state.anchors[item.id] ? { ...state.anchors[item.id] } : null;
+    current = item.id; loaded = false; paragraphs = [];
+    state.chapter = current; save();
+    $('libraryHome').hidden = true; $('readingView').hidden = false;
+    if (location.hash !== '#chapter-' + current) history.pushState(null, '', '#chapter-' + current);
+    $('reader').textContent = '正在載入章節…';
+    $('reader').setAttribute('aria-busy', 'true');
+    try {
+      const chapter = await load(item);
+      if (token !== navigation || $('readingView').hidden) return false;
+      paint(chapter);
+      $('reader').removeAttribute('aria-busy');
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        if (token !== navigation || $('readingView').hidden) return;
+        if (gesture === startGesture) {
+          let top;
+          const target = Number.isInteger(options.paragraph) ? { paragraph: options.paragraph, fraction: 0 } : resume ? anchor : null;
+          if (target && paragraphs[target.paragraph]) {
+            const rect = paragraphs[target.paragraph].getBoundingClientRect();
+            top = rect.top + scrollY + rect.height * (Number(target.fraction) || 0) - (innerWidth > 850 ? 100 : 20);
+          } else if (resume && Number.isFinite(savedTop)) top = savedTop;
+          else top = $('readingView').getBoundingClientRect().top + scrollY - (innerWidth > 850 ? 85 : 12);
+          window.scrollTo({ top: Math.max(0, top), behavior: 'instant' });
+        }
+        loaded = true; progress();
+      }));
+      return true;
+    } catch (_) {
+      if (token !== navigation || $('readingView').hidden) return false;
+      $('reader').removeAttribute('aria-busy');
+      $('reader').replaceChildren(make('p', '', '章節暫時無法載入，請確認網路後再試一次。'));
+      const retry = make('button', 'navbtn', '重新載入');
+      retry.onclick = () => open(item.id, resume, options);
+      $('reader').append(retry);
+      return false;
+    }
+  }
+  function leave() { progress(); save(); navigation++; loaded = false; }
+  function next(delta) {
+    const index = list.findIndex(item => item.id === current);
+    if (list[index + delta]) open(list[index + delta].id);
+  }
+  function init() {
+    list = window.NOVEL_CATALOG || [];
+    if (!list.some(item => item.id === Number(state.chapter))) state.chapter = list[0]?.id || 1;
+    $('countLabel').textContent = list.length + ' chapters';
+    list.forEach(chapter => {
+      const option = make('option', '', 'Chapter ' + chapter.id); option.value = chapter.id;
+      $('chapterSelect').append(option);
+      const link = make('a', 'chapter-link'); link.href = '#chapter-' + chapter.id; link.dataset.id = chapter.id;
+      link.append(make('span', 'number', String(chapter.id).padStart(2, '0')), make('span', '', chapter.title));
+      $('chapterList').append(link);
+    });
+    $('chapterSelect').onchange = event => open(Number(event.target.value));
+    $('prevBtn').onclick = () => next(-1); $('nextBtn').onclick = () => next(1);
+    const update = (field, value) => { state[field] = value; applySettings(); save(); };
+    $('themeBtn').onclick = () => update('theme', state.theme === 'dark' ? 'light' : 'dark');
+    $('fontPlus').onclick = () => update('size', Math.min(28, state.size + 1));
+    $('fontMinus').onclick = () => update('size', Math.max(15, state.size - 1));
+    $('vocabToggle').onclick = () => update('vocab', !state.vocab);
+    $('fontFamily').onchange = event => update('font', event.target.value);
+    $('lineHeight').onchange = event => update('lineHeight', event.target.value);
+    $('themeSelect').onchange = event => update('theme', event.target.value);
+    $('artToggle').onchange = event => update('art', event.target.checked);
+    $('settingsBtn').onclick = () => $('settingsDialog').showModal();
+    document.querySelector('.skip-link').onclick = event => {
+      event.preventDefault();
+      const target = $('readingView').hidden ? $('contents') : $('reader');
+      target.setAttribute('tabindex', '-1');
+      target.focus({ preventScroll: true });
+      target.scrollIntoView({ behavior: 'instant', block: 'start' });
+    };
+    $('jumpTop').onclick = () => window.scrollTo({ top: 0, behavior: 'instant' });
+    window.addEventListener('scroll', () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => { frame = 0; progress(); });
+    }, { passive: true });
+    ['touchstart', 'pointerdown', 'wheel', 'keydown'].forEach(type => window.addEventListener(type, () => { gesture++; }, { passive: true }));
+    window.addEventListener('pagehide', () => { progress(); save(); });
+    document.addEventListener('visibilitychange', () => { if (document.hidden) { progress(); save(); } });
+    applySettings();
+  }
+  window.NovelReader = { init, open, leave, position, notice, make, getState: () => state, getChapter: () => current, registerChapter: chapter => data.set(chapter.id, chapter) };
+})();
