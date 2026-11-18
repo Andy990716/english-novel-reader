@@ -57,7 +57,7 @@ button:disabled{opacity:.4;cursor:default}
 html[data-font=sans] .paragraphs{font-family:system-ui,-apple-system,sans-serif}
 .paragraph-row{display:grid;grid-template-columns:minmax(0,1fr) 28px;gap:8px;align-items:start}
 .paragraph-mark{font:18px/1 system-ui;background:none;border:0;border-radius:6px;color:var(--sub);cursor:pointer;min-height:32px;width:28px;opacity:.42;margin-top:3px;padding:0}
-.paragraph-mark:hover,.paragraph-mark:focus-visible{opacity:1;background:var(--bg);color:var(--accent)}
+.paragraph-mark[aria-pressed="true"],.paragraph-mark:hover,.paragraph-mark:focus-visible{opacity:1;background:var(--bg);color:var(--accent)}
 .part{scroll-margin-top:95px}
 .art-hidden .chapter-illustration{display:none}
 .settings-heading{display:flex;justify-content:space-between;align-items:center;gap:12px}

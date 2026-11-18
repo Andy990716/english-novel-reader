@@ -110,9 +110,9 @@
         p.dataset.paragraph = id;
         const mark = make('button', 'paragraph-mark', '＋');
         mark.type = 'button';
-        mark.setAttribute('aria-label', '儲存第 ' + (id + 1) + ' 段書籤');
-        mark.title = '儲存這段';
-        mark.onclick = () => window.NovelLibrary.addBookmark(id);
+        mark.dataset.paragraph = id;
+        mark.setAttribute('aria-label', '第 ' + (id + 1) + ' 段書籤');
+        mark.onclick = () => window.NovelLibrary.addBookmark(id, true);
         row.append(p, mark); body.append(row);
       });
       section.append(body);
@@ -130,6 +130,7 @@
       box.append(section);
     });
     paragraphs = Array.from(box.querySelectorAll('.paragraphs p'));
+    window.NovelLibrary.refreshBookmarkButtons();
     const words = chapter.parts.flatMap(p => p.paragraphs).join(' ').trim().split(/\s+/).length;
     $('readingTime').textContent = words.toLocaleString() + ' words · 約 ' + Math.ceil(words / 180) + ' 分鐘';
     $('currentTitle').textContent = 'Chapter ' + chapter.id + ' — ' + chapter.title;

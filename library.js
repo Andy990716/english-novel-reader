@@ -14,16 +14,38 @@
     try { localStorage.setItem(key, JSON.stringify(next)); bookmarks = next; return true; }
     catch (_) { window.NovelReader.notice('書籤無法儲存，請確認瀏覽器允許儲存資料。'); return false; }
   }
-  function addBookmark(index) {
+  function refreshBookmarkButtons() {
+    loadBookmarks();
+    const chapter = window.NovelReader.getChapter();
+    const saved = new Set(bookmarks.filter(mark => mark.chapter === chapter).map(mark => mark.paragraph));
+    document.querySelectorAll('#reader .paragraph-mark').forEach(button => {
+      const active = saved.has(Number(button.dataset.paragraph));
+      button.textContent = active ? '✓' : '＋';
+      button.setAttribute('aria-pressed', String(active));
+      button.title = active ? '取消這段書籤' : '儲存這段';
+    });
+  }
+  function addBookmark(index, toggle = false) {
     const chapter = window.NovelReader.getChapter();
     const paragraphs = Array.from(document.querySelectorAll('#reader .paragraphs p'));
     const paragraph = Number.isInteger(index) ? index : window.NovelReader.position()?.paragraph;
     if (!chapter || !paragraphs[paragraph]) return;
     loadBookmarks();
     const id = chapter + '-' + paragraph;
-    if (bookmarks.some(mark => mark.id === id)) { window.NovelReader.notice('這一段已經在書籤裡了。'); return; }
+    const isCurrentParagraph = mark => mark.chapter === chapter && mark.paragraph === paragraph;
+    if (bookmarks.some(isCurrentParagraph)) {
+      if (!toggle) {
+        window.NovelReader.notice('這一段已經在書籤裡了。');
+      } else if (write(bookmarks.filter(mark => !isCurrentParagraph(mark)))) {
+        refreshBookmarkButtons();
+        $('bookmarkStatus').textContent = '已取消第 ' + (paragraph + 1) + ' 段書籤。';
+        window.NovelReader.notice('已取消這一段書籤');
+      }
+      return;
+    }
     const label = paragraphs[paragraph].textContent.slice(0, 120);
     if (write(bookmarks.concat({ id, chapter, paragraph, label, createdAt: Date.now() }))) {
+      refreshBookmarkButtons();
       $('bookmarkStatus').textContent = '已儲存第 ' + (paragraph + 1) + ' 段，可從上方「書籤」返回。';
       window.NovelReader.notice('已儲存這一段書籤');
     }
@@ -103,8 +125,11 @@
     $('continueReading').onclick = () => window.NovelReader.open(Number(window.NovelReader.getState().chapter) || 1, true);
     $('addBookmark').onclick = () => addBookmark();
     window.addEventListener('hashchange', () => route());
-    window.addEventListener('storage', event => { if (event.key === key && !$('libraryHome').hidden) renderBookmarks(); });
+    window.addEventListener('storage', event => { if (event.key === key || event.key === null) {
+      if ($('libraryHome').hidden) refreshBookmarkButtons();
+      else renderBookmarks();
+    } });
     route(true);
   }
-  window.NovelLibrary = { init, addBookmark };
+  window.NovelLibrary = { init, addBookmark, refreshBookmarkButtons };
 })();
