@@ -72,7 +72,7 @@ window.NovelReader.registerChapter({
         "She’d been standing there in silence for so long, looking for all the world as though she were deep in thought. Never in his wildest dreams would he have guessed that was what she’d come up with.",
         "He dearly wanted to tell her, Look, we’ve got a serious situation here. Could you try having a normal thought for once?",
         "She’d known a good-looking guy for all of a day, rounding up. He’d made a show of being willing to die for her and said a few things that sounded like he cared. Surely she didn’t think that counted as love?",
-        "Shi Le didn’t quite know what to do with her. Clever as Qiu Qianluo was, she still had a lot to learn about people. She was seventeen, after all. Watching from the sidelines, she might have seen through the whole thing. When it happened to her, she could hardly tell what was real.",
+        "Shi Le didn’t quite know what to do with her. Clever as Qiu Qianluo was, she still had a lot to learn about people. She was twenty, after all. Watching from the sidelines, she might have seen through the whole thing. When it happened to her, she could hardly tell what was real.",
         "Then again, it was precisely because she hadn’t seen through him that he’d been able to get this close."
       ],
       "vocab": [
