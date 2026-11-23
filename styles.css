@@ -77,3 +77,6 @@ html[data-font=sans] .paragraphs{font-family:system-ui,-apple-system,sans-serif}
 @media(max-width:380px){.book-showcase{grid-template-columns:1fr}.book-cover{margin:0 auto}.home-contents{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
 
+
+/* Keep a vertical swipe at the document boundary from triggering a bounce. */
+@media (pointer:coarse){html{overscroll-behavior-y:none}}

@@ -3,7 +3,7 @@
   const key = 'novel-reader-progress-v2';
   const data = new Map(), loads = new Map();
   let list = [], current = null, loaded = false, navigation = 0, gesture = 0;
-  let frame = 0, saveTimer = 0, noticeTimer = 0, paragraphs = [];
+  let saveTimer = 0, noticeTimer = 0, paragraphs = [];
   const state = { theme: 'light', size: 18, vocab: true, chapter: 1, positions: {}, anchors: {}, percentages: {}, font: 'serif', lineHeight: '1.9', art: true };
   try {
     const saved = JSON.parse(localStorage.getItem(key) || '{}');
@@ -24,7 +24,6 @@
     return node;
   }
   function save() { try { localStorage.setItem(key, JSON.stringify(state)); } catch (_) {} }
-  function persistSoon() { clearTimeout(saveTimer); saveTimer = setTimeout(save, 300); }
   function notice(text) {
     $('readerNotice').textContent = text;
     $('readerNotice').hidden = false;
@@ -69,12 +68,11 @@
     const start = box.top + scrollY;
     const distance = Math.max(box.height - innerHeight, 1);
     const pct = Math.max(0, Math.min(100, Math.round((scrollY - start) / distance * 100)));
-    $('progress').style.width = pct + '%';
-    $('readingPercent').textContent = '本章 ' + pct + '%';
     state.positions[current] = scrollY;
     state.anchors[current] = paragraphs.length && paragraphs[0].getBoundingClientRect().top <= (innerWidth > 850 ? 100 : 20) ? position() : null;
     state.percentages[current] = pct;
-    persistSoon();
+    $('progress').style.width = pct + '%';
+    $('readingPercent').textContent = '本章 ' + pct + '%';
   }
   function paint(chapter) {
     const box = $('reader');
@@ -182,20 +180,17 @@
       if (token !== navigation || $('readingView').hidden) return false;
       paint(chapter);
       $('reader').removeAttribute('aria-busy');
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        if (token !== navigation || $('readingView').hidden) return;
-        if (gesture === startGesture) {
-          let top;
-          const target = Number.isInteger(options.paragraph) ? { paragraph: options.paragraph, fraction: 0 } : resume ? anchor : null;
-          if (target && paragraphs[target.paragraph]) {
-            const rect = paragraphs[target.paragraph].getBoundingClientRect();
-            top = rect.top + scrollY + rect.height * (Number(target.fraction) || 0) - (innerWidth > 850 ? 100 : 20);
-          } else if (resume && Number.isFinite(savedTop)) top = savedTop;
-          else top = $('readingView').getBoundingClientRect().top + scrollY - (innerWidth > 850 ? 85 : 12);
-          window.scrollTo({ top: Math.max(0, top), behavior: 'instant' });
-        }
-        loaded = true; progress();
-      }));
+      if (gesture === startGesture) {
+        let top;
+        const target = Number.isInteger(options.paragraph) ? { paragraph: options.paragraph, fraction: 0 } : resume ? anchor : null;
+        if (target && paragraphs[target.paragraph]) {
+          const rect = paragraphs[target.paragraph].getBoundingClientRect();
+          top = rect.top + scrollY + rect.height * (Number(target.fraction) || 0) - (innerWidth > 850 ? 100 : 20);
+        } else if (resume && Number.isFinite(savedTop)) top = savedTop;
+        else top = $('readingView').getBoundingClientRect().top + scrollY - (innerWidth > 850 ? 85 : 12);
+        window.scrollTo({ top: Math.max(0, top), behavior: 'instant' });
+      }
+      loaded = true; progress();
       return true;
     } catch (_) {
       if (token !== navigation || $('readingView').hidden) return false;
@@ -213,6 +208,7 @@
     if (list[index + delta]) open(list[index + delta].id);
   }
   function init() {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
     list = window.NOVEL_CATALOG || [];
     if (!list.some(item => item.id === Number(state.chapter))) state.chapter = list[0]?.id || 1;
     $('countLabel').textContent = list.length + ' chapters';
@@ -244,10 +240,10 @@
     };
     $('jumpTop').onclick = () => window.scrollTo({ top: 0, behavior: 'instant' });
     window.addEventListener('scroll', () => {
-      if (frame) return;
-      frame = requestAnimationFrame(() => { frame = 0; progress(); });
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => { progress(); save(); }, 140);
     }, { passive: true });
-    ['touchstart', 'pointerdown', 'wheel', 'keydown'].forEach(type => window.addEventListener(type, () => { gesture++; }, { passive: true }));
+    ['touchstart', 'touchmove', 'pointerdown', 'wheel', 'keydown'].forEach(type => window.addEventListener(type, () => { gesture++; }, { passive: true }));
     window.addEventListener('pagehide', () => { progress(); save(); });
     document.addEventListener('visibilitychange', () => { if (document.hidden) { progress(); save(); } });
     applySettings();
