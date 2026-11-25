@@ -1,6 +1,7 @@
 (function () {
   'use strict';
-  const key = 'novel-reader-bookmarks-v1';
+  const book = document.documentElement.dataset.book;
+  const key = book ? 'novel-reader-bookmarks-v1-' + book : 'novel-reader-bookmarks-v1';
   const $ = id => document.getElementById(id);
   let bookmarks = [], lastRoute = '';
   const make = (...args) => window.NovelReader.make(...args);

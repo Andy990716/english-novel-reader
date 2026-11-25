@@ -1,6 +1,7 @@
 (function () {
   'use strict';
-  const key = 'novel-reader-progress-v2';
+  const book = document.documentElement.dataset.book;
+  const key = book ? 'novel-reader-progress-v2-' + book : 'novel-reader-progress-v2';
   const data = new Map(), loads = new Map();
   let list = [], current = null, loaded = false, navigation = 0, gesture = 0;
   let saveTimer = 0, noticeTimer = 0, paragraphs = [];

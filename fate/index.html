@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-Hant" data-book="fate">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#f7f4ed" />
+<meta name="description" content="I Really Didn’t Mean to Control Them! English Reading Edition B2–C1" />
+<title>I Really Didn’t Mean to Control Them! · English Reader</title>
+<link rel="stylesheet" href="../styles.css?v=20261123-scroll" />
+</head>
+<body>
+<a class="skip-link" href="#reader">跳到閱讀內容</a>
+<div class="progress-track" aria-hidden="true"><div id="progress" class="progress"></div></div>
+<header class="topbar"><div class="topwrap">
+  <a class="brand" href="#home" aria-label="回首頁" title="回首頁"><span class="brand-mark">F</span><span class="brand-name">NOVEL / ENGLISH</span></a>
+  <div class="topactions"><a class="iconbutton" href="#contents">目錄</a><a class="iconbutton" href="#bookmarks">書籤</a><button id="themeBtn" class="iconbutton" aria-label="切換深色模式" title="切換深色模式">◐</button><button id="settingsBtn" class="iconbutton" aria-haspopup="dialog">閱讀設定</button></div>
+</div></header>
+<main class="wrap">
+<aside class="rail"><div class="sidebar-inner">
+  <div class="eyebrow">YOUR LIBRARY</div><h2>Chapters</h2>
+  <div id="chapterList" class="chapter-list"></div>
+  <div class="rail-foot"><span class="pill">B2–C1</span><p>Natural English · Key Vocabulary</p></div>
+</div></aside>
+<section class="main">
+  <section id="libraryHome">
+<div class="section-heading"><h2>小說書庫</h2><a class="navbtn" href="../">前往《我的遊戲角色有問題！》</a></div>
+<div class="book-showcase"><div class="book-cover" style="background:linear-gradient(145deg,#201e38,#532d58 68%,#844457)" role="img" aria-label="我真沒想操控她們啊！文字封面"><span>BING HONGKE</span><div class="cover-orbit"></div><strong>I Really Didn’t<br>Mean to<br>Control Them!</strong><span>我真沒想操控她們啊！</span></div><div><h1>我真沒想操控她們啊！</h1><h2>I Really Didn’t Mean to Control Them!</h2><p>冰紅客 · Bing Hongke</p><p>王子歌特思被命運推進死局，只能進入神祕的命運劇本，改寫自己和他人的人生。</p><p>B2–C1 英文小說 · 中文單字解釋</p><p id="resumeLabel" class="resume-label"></p><button class="navbtn primary" id="continueReading">繼續閱讀</button> <a class="navbtn" href="#chapter-1">從第一章開始</a></div></div>
+<div class="section-heading"><div><p class="eyebrow">THE STORY SO FAR</p><h2 id="contents">章節目錄</h2></div><span id="chapterCount" class="pill"></span></div><label class="search-label" for="chapterSearch">搜尋章節</label><input id="chapterSearch" class="chapter-search" type="search" placeholder="輸入章節編號或英文標題…" autocomplete="off"><p id="searchStatus" class="muted" role="status"></p><div id="homeContents" class="home-contents"></div>
+<div class="section-heading"><div><p class="eyebrow">SAVED FOR LATER</p><h2 id="bookmarks">我的書籤</h2></div><span id="bookmarkCount" class="pill"></span></div><p>書籤儲存在此裝置的瀏覽器。</p><div id="bookmarkList"></div>
+</section><div id="readingView" hidden><div class="hero" id="readingHero">
+    <div class="eyebrow">ENGLISH READING PRACTICE <span class="dot"></span> SERIAL NOVEL</div>
+    <h1>I Really Didn’t Mean to Control Them!</h1>
+    <p class="subtitle">A prince caught in a deadly fate. A chance to rewrite the script.</p>
+    <div class="hero-meta"><span>Bing Hongke · 冰紅客</span><span class="sep">/</span><span>English B2–C1</span><span class="sep">/</span><span id="countLabel">2 chapters</span></div>
+  </div>
+  <div class="reading-tools">
+    <div><span class="eyebrow">NOW READING</span><div id="currentTitle" class="current-title">Chapter 1</div></div>
+    <div class="toolright"><label class="select-label" for="chapterSelect">章節</label><select id="chapterSelect" aria-label="選擇章節"></select><button id="vocabToggle" class="vocab-toggle" aria-pressed="true">單字表 <span id="vocabSymbol">ON</span></button></div>
+  </div>
+  <div class="reader-actions"><button id="addBookmark" class="navbtn">＋ 加入書籤</button><span id="readingTime" class="muted"></span></div><details class="part-navigation"><summary>本章小節</summary><nav id="partList" aria-label="本章小節"></nav></details><p id="bookmarkStatus" role="status"></p><article id="reader" class="reader" tabindex="-1"><p>Loading chapter…</p></article>
+  <div class="chapter-bottom"><button id="prevBtn" class="navbtn">← 上一章</button><span id="readingPercent">0% read</span><button id="nextBtn" class="navbtn primary">下一章 →</button></div>
+  </div><footer class="footer">Read a little. Discover a little more.<br/>閱讀進度、書籤與設定會保存在此瀏覽器。</footer>
+</section>
+</main>
+<dialog id="settingsDialog" aria-labelledby="settingsTitle">
+<form method="dialog" class="settings-heading"><h2 id="settingsTitle">讓閱讀更舒服</h2><button class="iconbutton" aria-label="關閉閱讀設定">✕</button></form>
+<p class="muted">設定會自動儲存，下次閱讀時沿用。</p>
+<div class="setting-row"><span>字體大小</span><div><button id="fontMinus" class="iconbutton" aria-label="縮小字體">A−</button> <output id="fontSizeLabel"></output> <button id="fontPlus" class="iconbutton" aria-label="放大字體">A+</button></div></div>
+<label class="setting-row">閱讀字型<select id="fontFamily"><option value="serif">襯線 · 小說風格</option><option value="sans">無襯線 · 清晰簡潔</option></select></label>
+<label class="setting-row">行距<select id="lineHeight"><option value="1.7">緊湊</option><option value="1.9">標準</option><option value="2.2">寬鬆</option></select></label>
+<label class="setting-row">配色<select id="themeSelect"><option value="light">暖白紙頁</option><option value="sepia">柔和米色</option><option value="dark">深色夜讀</option></select></label>
+<label class="setting-row">章首插圖<input id="artToggle" type="checkbox"></label>
+<p class="muted">長按正文可選字；點段落旁的「＋」收藏，再點「✓」取消。</p>
+</dialog>
+<div id="readerNotice" class="reader-notice" role="status" hidden></div>
+<button id="jumpTop" class="jump-top" aria-label="回到上方" title="回到上方">↑</button>
+<script src="../reader.js?v=20261125-books"></script>
+<script src="chapters/catalog.js?v=20261125-fate"></script>
+<script src="../library.js?v=20261125-books"></script><script>window.NovelReader.init(); window.NovelLibrary.init();</script>
+</body>
+</html>
