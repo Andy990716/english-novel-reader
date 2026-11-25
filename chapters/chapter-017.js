@@ -35,6 +35,7 @@ window.NovelReader.registerChapter({
       "paragraphs": [
         "His panic vanished. Shi Le drew his pistol and fell backward as the metal flew over him, missing his face by a hair. At the same time, he fired a white round at her right leg.",
         "He hoped the shot would keep her from chasing him. Once the protagonist was free, there might be a way to heal her. He had no wish to keep fighting her, especially with his ammunition almost gone.",
+        "He also didn’t want to drag this fight out with someone who looked so much smaller than him. And, more practically, he had only one white round left after this one.",
         "He’d started with one purple round and six white ones. Three white rounds had broken the bolts on the prisoners’ door. He’d used a purple one and a white one against the warden. This was another white round.",
         "The special bullets disappeared three minutes after leaving a magazine. He couldn’t have Qiu Qianluo make a pile and carry them in his pockets. He’d even tried taking red rounds from his submachine gun, only to find they were the wrong size.",
         "Please, he thought, don’t be another monster who can dodge bullets.",
@@ -44,8 +45,11 @@ window.NovelReader.registerChapter({
         "“Ow! What was that for?” She crouched and rubbed the spot.",
         "Shi Le’s eye twitched. A round like that could knock the warden off her feet, even break a finger if she failed to defend herself. This woman had taken it to the knee and got away with a little redness. How was that possible?",
         "He was beginning to think he’d picked a fight with something far more dangerous than he’d realized.",
+        "He’d expected the hit to immobilize her until help arrived. Instead, her clothes had taken more damage than she had. A shot that could send the warden flying had left her rubbing her knee. If he’d known she was this tough aboard the ship, he might have asked her to shield him from the gunfire.",
+        "She didn’t appear as a recruitable character in the game. She hadn’t even appeared in its story. Where had a powerhouse like this been hiding?",
         "Could she take on his sister alone? Probably not. Strength and toughness were impressive, but they wouldn’t help if Deathflame took control of her. That would leave him facing an enemy he couldn’t even hurt.",
-        "There was one weakness, though. She was slow. He’d seen it when she punched the guard. For all her strength, she moved at an ordinary person’s speed. He couldn’t begin to explain it. Then again, this world had never cared much for his idea of what made sense."
+        "There was one weakness, though. She was slow. He’d seen it when she punched the guard. For all her strength, she moved at an ordinary person’s speed. He couldn’t begin to explain it. Then again, this world had never cared much for his idea of what made sense.",
+        "By all rights, strength like hers should have made her faster as well. That was how Shi Le thought bodies worked. Apparently the rules of this game world had other ideas."
       ],
       "vocab": [
         "miss by a hair 差一點就擊中",
@@ -66,17 +70,22 @@ window.NovelReader.registerChapter({
         "“Then why are you trying to hit me?”",
         "“Because of what you did to me!”",
         "Shi Le winced. He regretted giving her the sleeping draught. Still, he’d had a good reason at the time. If only she’d let him finish a sentence.",
+        "For the first time since arriving here, he sincerely wished he could undo one of his decisions. Yet he still tried to explain why he’d put her to sleep. Qiu Qianluo had needed time, and the woman had been about to get in the way.",
         "“That was a misunderstanding. Qiu Qianluo had something important to—”",
         "She cut him off again, her face red with embarrassment and anger. “I told you to stop! And you wouldn’t! You kept getting closer!”",
+        "Her hair stood up at the edges. She looked furious and close to tears, as though the nightmare were still happening right in front of her.",
         "Shi Le stared. “When did I do that?”",
         "“In my dream!” she snapped.",
         "For a moment they looked at each other in silence.",
+        "Shi Le tried to remember what he’d actually done. He had touched her once to check who she was. That had been an accident, he insisted to himself. The rest of her accusation belonged to a dream.",
         "“That was a dream,” he said at last. “I wasn’t there.”",
         "“You were in it,” she said. “And I’m still angry.”",
         "“I didn’t choose what you dreamed about.”",
+        "“And I certainly didn’t do everything you’re accusing me of!” he protested.",
         "“Enough excuses! I’m going to pay you back for every bit of trouble you caused me.”",
         "Shi Le opened his mouth to protest. Then he remembered what her fist had done to the warehouse door.",
-        "He took a careful step backward. “Can we at least talk before you do that?”"
+        "He started to object that revenge ought to have some limits. The thought died halfway out of his mouth, replaced by a nervous, rather foolish grin.",
+        "“Could we talk about what ‘pay me back’ means first?” he asked, trying to sound cheerful. “I’d hate for either of us to get the wrong idea again.”"
       ],
       "vocab": [
         "shout over someone 大聲打斷某人",
