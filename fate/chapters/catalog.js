@@ -16,5 +16,11 @@ window.NOVEL_CATALOG = [
     "title": "My Dear Little Sister",
     "file": "chapters/chapter-003.js",
     "image": "images/chapter-003.webp"
+  },
+  {
+    "id": 4,
+    "title": "The Primordial God Has No Followers",
+    "file": "chapters/chapter-004.js",
+    "image": "images/chapter-004.webp"
   }
 ];
